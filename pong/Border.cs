@@ -2,30 +2,28 @@ using System;
 
 namespace Pong
 {
-    public class Border
+    public class Border : Asset
     {
-        // Draw the border on the console
-        public void Draw(int width, int height)
+        public string tb = ""; // Initialize with an empty string
+        public string lr = ""; // Initialize with an empty string
+
+        public Border()
         {
-            Console.Clear();
+            this.X = 0;
+            this.Y = 1;
 
-            // Draw top and bottom borders
-            for (int x = 0; x < width; x++)
-            {
-                Console.SetCursorPosition(x, 1);
-                Console.Write("+");
-                Console.SetCursorPosition(x, height -1);
-                Console.Write("+");
-            }
+            for (int i = 0; i < Console.WindowWidth; i++) { tb += "+"; }
+            for (int i = 0; i < Console.WindowWidth - 2; i++) { lr += " "; }
+            lr = "+" + lr + "+"; // Set lr correctly
 
-            // Draw left and right borders
-            for (int y = 1; y < height; y++)
+            this.assetImage = new String[Console.WindowHeight]; // Initialize the array with correct size
+
+            this.assetImage[0] = tb; // Assign the top border
+            for (int i = 1; i < Console.WindowHeight - 2; i++)
             {
-                Console.SetCursorPosition(0, y);
-                Console.Write("+");
-                Console.SetCursorPosition(width - 1, y);
-                Console.Write("+");
+                this.assetImage[i] = lr; // Assign the side borders
             }
+            this.assetImage[Console.WindowHeight - 2] = tb; // Assign the bottom border
         }
     }
 }

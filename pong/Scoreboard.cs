@@ -2,50 +2,49 @@
 
 namespace Pong
 {
-    public class Scoreboard
+    public class Scoreboard : Asset
     {
         private int player1Score;
         private int player2Score;
-        private int pointsToWin;
+        private readonly int pointsToWin;
 
         public Scoreboard(int pointsToWin)
         {
             player1Score = 0;
             player2Score = 0;
             this.pointsToWin = pointsToWin;
+
+            this.X = Console.WindowWidth / 2 - 12;
+            this.Y = 0;
+            this.assetImage = new String[] { $"Player 1: {player1Score}  Player 2: {player2Score}" };
         }
 
         public void IncrementPlayer1Score()
         {
             player1Score++;
+            this.assetImage = new string[] { $"Player 1: {player1Score}  Player 2: {player2Score}" }; // Sets the assetImage again to update the score
         }
 
         public void IncrementPlayer2Score()
         {
             player2Score++;
+            this.assetImage = new string[] { $"Player 1: {player1Score}  Player 2: {player2Score}" }; // Sets the assetImage again to update the score
         }
 
         public bool Player1Wins()
         {
-            return player1Score >= pointsToWin; // Assuming best of 5 game
+            return player1Score >= pointsToWin; // returns true if the player has the points to win the game
         }
 
         public bool Player2Wins()
         {
-            return player2Score >= pointsToWin; // Assuming best of 5 game
+            return player2Score >= pointsToWin; // returns true if the player has the points to win the game
         }
 
-        public void Draw(int gameWidth)
+        public void Win(int player)
         {
-            // Calculate scoreboard position to center it within the border
-            int scoreboardX = (gameWidth / 2) - 12; // Adjusted to center the scoreboard within the border
-            int scoreboardY = 0; // Above the top border
-
-            // Set cursor position for drawing scoreboard
-            Console.SetCursorPosition(scoreboardX, scoreboardY);
-
-            // Display the scoreboard
-            Console.Write($"Player 1: {player1Score}  Player 2: {player2Score}");
+            this.assetImage = new string[] { $"Player {player} wins the game!" };
+            Draw(Console.WindowWidth / 2 - 11, Console.WindowHeight / 2);
         }
     }
 }

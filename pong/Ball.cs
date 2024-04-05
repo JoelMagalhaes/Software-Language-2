@@ -2,33 +2,21 @@ using System;
 
 namespace Pong
 {
-    public class Ball
+    public class Ball : Asset
     {
-        public int X { get; private set; }
-        public int Y { get; private set; }
         private int velocityX;
         private int velocityY;
 
         public Ball(int x, int y, int velocityX, int velocityY)
         {
-            X = x;
-            Y = y;
+            this.X = x;
+            this.Y = y;
             this.velocityX = velocityX;
             this.velocityY = velocityY;
+
+            this.assetImage = new String[] { "O" };
         }
 
-
-        public void Draw()
-        {
-            Console.SetCursorPosition(X, Y);
-            Console.Write("O"); // Assuming "O" represents the ball
-        }
-
-        public void Remove()
-        {
-            Console.SetCursorPosition(X, Y);
-            Console.Write(" ");
-        }
         public void Move()
         {
             // Remove the ball
@@ -39,7 +27,7 @@ namespace Pong
             Y += velocityY;
 
             // Draw the ball on the new position
-            Draw();
+            Draw(X, Y);
         }
 
         public void Reset()
@@ -63,7 +51,7 @@ namespace Pong
                 velocityX = -velocityX; // Reverse the horizontal velocity
                 Reset();
                 scoreboard.IncrementPlayer2Score();
-            } else if (X >= maxWidth - 2)
+            } else if (X >= maxWidth - 1)
             {
                 velocityX = -velocityX;
                 Reset();

@@ -18,21 +18,31 @@ namespace Pong
         
         public static void Show()
         {
-            border.Draw(Console.WindowWidth, Console.WindowHeight);
-            Console.SetCursorPosition((Console.WindowWidth /  2) - 25, Console.WindowHeight / 2 - 1);
-            // Prompt the user to resize the console window
-            Console.WriteLine("Please resize the console window to your desired size");
-            Console.SetCursorPosition((Console.WindowWidth / 2) - 14, Console.WindowHeight / 2);
+            border.Draw(border.X, border.Y); // Draw the border
+            Console.SetCursorPosition((Console.WindowWidth / 2) - 14, Console.WindowHeight / 2 -1); // Set the cursor so the next line is written in the middle of the screen
             Console.WriteLine("Press enter to start the game");
-            Console.SetCursorPosition((Console.WindowWidth / 2) - 8, Console.WindowHeight / 2 + 1);
+            Console.SetCursorPosition((Console.WindowWidth / 2) - 8, Console.WindowHeight / 2); // Set the cursor so the next line is written in the middle of the screen
             Console.WriteLine("For help: pres H");
             ReadOption();
         }
 
+        // Shows the game key info
         public static void ShowInfo()
         {
+            Console.Clear();
+            border.Draw(border.X, border.Y);
+
+            Console.SetCursorPosition((Console.WindowWidth / 2) - 12, Console.WindowHeight / 2 - 1);
+            Console.WriteLine("Keys to move the paddles:");
+
+            Console.SetCursorPosition((Console.WindowWidth / 2) - 7, Console.WindowHeight / 2);
             Console.WriteLine("Player1 = W & S");
+
+            Console.SetCursorPosition((Console.WindowWidth / 2) - 7, Console.WindowHeight / 2 + 1);
             Console.WriteLine("Player2 = I & K");
+
+            Console.SetCursorPosition((Console.WindowWidth / 2) - 9, Console.WindowHeight / 2 + 3);
+            Console.WriteLine("To play press enter");
             ReadOption();
         }
 
