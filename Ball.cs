@@ -1,54 +1,53 @@
-﻿namespace Pong
+using System;
+
+namespace Pong
 {
     public class Ball
     {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int VelocityX { get; set; }
-        public int VelocityY { get; set; }
+        public int X { get; private set; }
+        public int Y { get; private set; }
+        private int velocityX;
+        private int velocityY;
 
-        public Ball(int x, int y)
+        public Ball(int x, int y, int velocityX, int velocityY)
         {
             X = x;
             Y = y;
-            VelocityX = 1; // Starting X velocity
-            VelocityY = 1; // Starting Y velocity
+            this.velocityX = velocityX;
+            this.velocityY = velocityY;
         }
 
-        // Move the ball based on its velocity
-        public void Move(Border border, int gameWidth, int gameHeight)
+        public void Move()
         {
-            // Move the ball
-            X += VelocityX;
-            Y += VelocityY;
-
-            // Check for collisions with top and bottom borders, and invert Y velocity if necessary
-            if (Y <= border.Top + 1 || Y >= gameHeight - border.Bottom - 1)
-            {
-                VelocityY = -VelocityY;
-            }
-
-
-            // Check for collisions with side borders
-            if (X <= border.Left || X >= gameWidth - border.Right - 1)
-            {
-                VelocityX = -VelocityX; // Invert X velocity
-            }
+            X += velocityX;
+            Y += velocityY;
         }
 
-
-        // Draw the ball on the console
         public void Draw()
         {
             Console.SetCursorPosition(X, Y);
-            Console.Write("O");
+            Console.Write("O"); // Assuming "O" represents the ball
         }
 
-        // Clear the ball from its current position on the console
-        public void Clear()
+        public void CheckBorderCollision(int maxWidth, int maxHeight)
         {
-            Console.SetCursorPosition(X, Y);
-            Console.Write(" ");
+            // Check collision with left and right borders
+            if (X <= 0 || X >= maxWidth - 2)
+            {
+                velocityX = -velocityX; // Reverse the horizontal velocity
+            }
+
+            // Check collision with top border
+            if (Y <= 3)
+            {
+                velocityY = Math.Abs(velocityY); // Ensure the vertical velocity is positive
+            }
+
+            // Check collision with bottom border
+            if (Y >= maxHeight - 4)
+            {
+                velocityY = -Math.Abs(velocityY); // Ensure the vertical velocity is negative
+            }
         }
     }
 }
