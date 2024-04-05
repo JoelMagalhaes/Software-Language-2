@@ -1,48 +1,85 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System;
 using System.Threading.Tasks;
 
 namespace Pong
 {
     public class Paddle
     {
-        // Define game parameters
+        // Define properties for the paddle
         public int Y { get; private set; }
-        public int Length { get; private set; } 
+        public int Length { get; private set; }
         public int Width { get; private set; }
-        public int Speed { get; private set; }
+        public int TopBoundary { get; private set; }
+        public int BottomBoundary { get; private set; }
 
-        public Paddle()
+        // Input keys for controlling the paddle
+        private ConsoleKey upKey;
+        private ConsoleKey downKey;
+
+        public Paddle(ConsoleKey upKey, ConsoleKey downKey)
         {
-            Y = 12;      // Set the initial Y position
+            Y = 12; // Set the initial Y position
             Length = 5; // Default length
-            Width = 5;  // Default width
-            Speed = 1;  // Default speed
+            Width = 5; // Default width
+            TopBoundary = 3; // Default top boundary
+            BottomBoundary = Console.WindowHeight - 2; // Default bottom boundary
+
+            this.upKey = upKey;
+            this.downKey = downKey;
         }
+
+        // Function to move the paddle up
         public void MoveUp()
         {
-            Y -= Speed;
+            if (Y > TopBoundary)
+            {
+                Y--;
+            }
         }
+
+        // Function to move the paddle down
         public void MoveDown()
         {
-            Y += Speed;
+            if (Y + Length < BottomBoundary)
+            {
+                Y++;
+            }
         }
-        // Function to draw a paddle
+
+        // Function to draw the paddle
         public void Draw(int x)
         {
             for (int i = 0; i < Length; i++)
             {
-                Console.SetCursorPosition(x, Y + i); // Adjusted position to leave space for the border
+                Console.SetCursorPosition(x, Y + i);
                 Console.Write("|");
             }
         }
-        // Method to check if a position (x, y) hits the paddle
-        public bool Hit(int x, int y)
+
+        // Function to handle player input asynchronously
+        public async Task HandleInputAsync()
         {
-            // Check if the given position (x, y) is within the paddle's range
-            return x == Y && y >= Y && y < Y + Length;
+            while (true)
+            {
+                if (await Task.Run(() => Console.KeyAvailable))
+                {
+                    ConsoleKeyInfo key = await Task.Run(() => Console.ReadKey(true));
+                    if (key.Key == upKey && Y > TopBoundary)
+                    {
+                        MoveUp();
+                    }
+                    else if (key.Key == downKey && Y + Length < BottomBoundary)
+                    {
+                        MoveDown();
+                    }
+                }
+                await Task.Delay(10); // Adjust delay as needed for smoother input handling
+            }
+        }
+
+        internal void HandleInput()
+        {
+            throw new NotImplementedException();
         }
     }
 }
