@@ -4,18 +4,6 @@ namespace Pong
 {
     public class Border
     {
-
-        public int Top { get; private set; }
-        public int Bottom { get; private set; }
-        public int Left { get; internal set; }
-        public int Right { get; internal set; }
-
-        public Border(int top, int bottom)
-        {
-            Top = top;
-            Bottom = bottom;
-        }
-
         // Draw the border on the console
         public void Draw(int width, int height)
         {
@@ -24,14 +12,14 @@ namespace Pong
             // Draw top and bottom borders
             for (int x = 0; x < width; x++)
             {
-                Console.SetCursorPosition(x, Top);
+                Console.SetCursorPosition(x, 1);
                 Console.Write("+");
-                Console.SetCursorPosition(x, Bottom);
+                Console.SetCursorPosition(x, height -1);
                 Console.Write("+");
             }
 
             // Draw left and right borders
-            for (int y = Top + 1; y < Bottom; y++)
+            for (int y = 1; y < height; y++)
             {
                 Console.SetCursorPosition(0, y);
                 Console.Write("+");
