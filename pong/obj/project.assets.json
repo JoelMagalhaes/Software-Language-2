@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\School\\Windesheim\\SL2\\a\\Software-Language-2\\Pong.csproj",
+      "projectUniqueName": "D:\\School\\Windesheim\\SL2\\a\\Software-Language-2\\pong\\Pong.csproj",
       "projectName": "Pong",
-      "projectPath": "D:\\School\\Windesheim\\SL2\\a\\Software-Language-2\\Pong.csproj",
+      "projectPath": "D:\\School\\Windesheim\\SL2\\a\\Software-Language-2\\pong\\Pong.csproj",
       "packagesPath": "C:\\Users\\rikba\\.nuget\\packages\\",
-      "outputPath": "D:\\School\\Windesheim\\SL2\\a\\Software-Language-2\\obj\\",
+      "outputPath": "D:\\School\\Windesheim\\SL2\\a\\Software-Language-2\\pong\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\rikba\\AppData\\Roaming\\NuGet\\NuGet.Config",

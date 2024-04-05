@@ -58,7 +58,7 @@ namespace Pong
         public void CheckBorderCollision(int maxWidth, int maxHeight, Scoreboard scoreboard)
         {
             // Check collision with left and right borders
-            if (X <= 1)
+            if (X <= 0)
             {
                 velocityX = -velocityX; // Reverse the horizontal velocity
                 Reset();
