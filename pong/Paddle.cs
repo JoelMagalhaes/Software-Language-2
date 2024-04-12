@@ -11,8 +11,8 @@ namespace Pong
         public int BottomBoundary { get; private set; }
 
         // Input keys for controlling the paddle
-        private ConsoleKey upKey;
-        private ConsoleKey downKey;
+        public ConsoleKey upKey;
+        public ConsoleKey downKey;
 
         public Paddle(ConsoleKey upKey, ConsoleKey downKey, int x)
         {
@@ -33,6 +33,7 @@ namespace Pong
 
         public void Move(string way)
         {
+            this.Remove(); // Removes the paddle
             switch (way)
             {
                 case "up":
@@ -44,22 +45,8 @@ namespace Pong
                 default:
                     throw new ArgumentException("Invalid direction. Expected 'up' or 'down'.", nameof(way));
             }
-        }
-
-        public void HandleInput() // Function to handle player input asynchronously
-        {
-            while (true)
-            {
-                ConsoleKey key = Console.ReadKey(true).Key;
-                if (key == upKey && Y > TopBoundary)
-                {
-                    Move("up"); // Try to move the paddle up
-                }
-                else if (key == downKey && Y + Length < BottomBoundary)
-                {
-                    Move("down"); // Try to move the paddle down
-                }
-            }
+            
+            this.Draw(); // Draws the paddle in the new location
         }
     }
 }

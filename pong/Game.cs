@@ -13,8 +13,6 @@ namespace Pong
         private Ball ball = new Ball(1, 1); // Initial position and velocity of the ball
         private bool gameRunning;
 
-        private readonly static object gameLock = new object(); // Makes a lock so you cant draw two things at once
-
         public Game()
         {
             gameRunning = true; // Starts the game
@@ -23,43 +21,60 @@ namespace Pong
         public async Task Start()
         {
             Console.Clear(); // Clears the console
+
+            // Draws the assets onto the screen
             border.Draw(); // Draw the border
             ball.Draw();
-
-            // Start handling input for both paddles asynchronously
-            _ = Task.Run(paddle1.HandleInput);
-            _ = Task.Run(paddle2.HandleInput);
-
+            paddle1.Draw();
+            paddle2.Draw();
 
             // Start the game loop
             while (gameRunning)
             {
-                // Draw the scoreboard above the game area and centered
-                lock (gameLock) { scoreboard.Draw(); }
+                if (Console.KeyAvailable) // If there is a key pressed, check if it is to move a paddle and then move a paddle. This is being done in this function so you dont have to press the key twice
+                {
+                    ConsoleKey key = Console.ReadKey(true).Key; // Puts the pressed key into the variable key
 
+                    if (key == paddle1.upKey && paddle1.Y > paddle1.TopBoundary) // Checks if it is the paddle1 upKey and if paddle1 is not on the top of the screen
+                    {
+                        paddle1.Move("up"); // Move paddle1 up
+                    }
+                    if (key == paddle1.downKey && paddle1.Y + paddle1.Length < paddle1.BottomBoundary) // Checks if it is the paddle1 downKey and if paddle1 is not on the bottom of the screen
+                    {
+                        paddle1.Move("down"); // Move paddle1 down
+                    }
 
-                // Draw the paddles in their current positions
-                // Int given is the x axis position of the paddle
-                lock (gameLock) { paddle1.Draw(); }
-                lock (gameLock) { paddle2.Draw(); }
+                    // Handle input for paddle 2
+                    if (key == paddle2.upKey && paddle2.Y > paddle2.TopBoundary) // Checks if it is the paddle2 upKey and if paddle2 is not on the top of the screen
+                    {
+                        paddle2.Move("up"); // Move paddle2 up
+                    }
+                    if (key == paddle2.downKey && paddle2.Y + paddle2.Length < paddle2.BottomBoundary) // Checks if it is the paddle2 downKey and if paddle2 is not on the bottom of the screen
+                    {
+                        paddle2.Move("down"); // Move paddle2 down
+                    }
+                }
 
                 // Check for collisions between the ball and the border or paddles
                 ball.CheckPaddleCollision(paddle1);
                 ball.CheckPaddleCollision(paddle2);
-                ball.CheckBorderCollision(Console.WindowWidth, Console.WindowHeight, scoreboard);
+                ball.CheckBorderCollision(scoreboard);
+
+                // Draw the scoreboard above the game area and centered
+                scoreboard.Draw();
 
                 // Check for game end conditions
                 if (scoreboard.CheckForWinner()) { gameRunning = false; } // If someone won, stop the games
 
-                await Task.Delay(800); // Task delay to control the speed
+                await Task.Delay(2); // Task delay to control the speed
             }
         }
         public async Task Ball()
         {
             while (gameRunning)
             {
-                lock (gameLock) { ball.Move(); } // Update and draw the ball
-                await Task.Delay(500); // Task delay to control the speed
+                ball.Move(); // Update and draw the ball
+                await Task.Delay(100); // Task delay to control the speed
             }
         }
 

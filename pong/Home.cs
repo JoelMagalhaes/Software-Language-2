@@ -22,13 +22,12 @@ namespace Pong
             border.Draw(); // Draw the border
 
             this.messages = new string[] { "Press enter to start the game", "For help: press H" }; // Sets the messages that are going to be dispayed
-            Message();
+            Message(); // Displays the messages from the messages array in the middle of the screen
 
-            ReadOption();
+            ReadOption(); // Reads the pressed key
         }
 
-        // Shows the game key info
-        public void ShowInfo()
+        public void ShowInfo() // Shows the game key info
         {
             Console.Clear(); // Clear everything from the screen
             border.Draw(); // Draw the border

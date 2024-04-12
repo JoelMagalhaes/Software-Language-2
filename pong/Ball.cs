@@ -42,32 +42,28 @@ namespace Pong
             Draw(); // Draw the ball on the default position
         }
 
-        public void CheckBorderCollision(int maxWidth, int maxHeight, Scoreboard scoreboard)
+        public void CheckBorderCollision(Scoreboard scoreboard)
         {
-            // Check collision with left and right borders
-            if (X <= 0)
+            if (X <= 0) // Check collision with left border
             {
-                velocityX = -2; // Reverse the horizontal velocity
+                velocityX = -velocityX; // Reverse the horizontal velocity
                 Reset();
                 scoreboard.IncrementPlayerScore(2); // Increments the score of player 2
             } 
-            else if (X >= maxWidth - 1)
+            else if (X >= Console.WindowWidth - 2) // Check collision with right border
             {
-                velocityX = +2; // Reverse the horizontal velocity
+                velocityX = -velocityX; // Reverse the horizontal velocity
                 Reset();
                 scoreboard.IncrementPlayerScore(1); // Increments the score of player 1
             }
 
-            // Check collision with top border
-            if (Y <= 2)
+            if (Y <= 2) // Check collision with top border
             {
-                velocityY = Math.Abs(velocityY); // Ensure the vertical velocity is positive
-            }
-
-            // Check collision with bottom border
-            if (Y >= maxHeight - 2)
+                velocityY = -velocityY; // Ensure the vertical velocity is positive
+            }          
+            else if (Y >= Console.WindowHeight - 3) // Check collision with bottom border
             {
-                velocityY = -Math.Abs(velocityY); // Ensure the vertical velocity is negative
+                velocityY = -velocityY; // Ensure the vertical velocity is negative
             }
         }
         

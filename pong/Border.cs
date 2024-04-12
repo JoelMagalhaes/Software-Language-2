@@ -20,11 +20,11 @@ namespace Pong
             this.assetImage = new String[Console.WindowHeight]; // Initialize the array with correct size
 
             this.assetImage[0] = tb; // Assign the top border
-            for (int i = 1; i < Console.WindowHeight - 1; i++) // Runs for each row of the border after the top border
+            for (int i = 1; i < Console.WindowHeight - 2; i++) // Runs for each row of the border after the top border
             {
                 this.assetImage[i] = lr; // Assign the side borders
             }
-            this.assetImage[Console.WindowHeight - 1] = tb; // Assign the bottom border
+            this.assetImage[Console.WindowHeight - 2] = tb; // Assign the bottom border
         }
     }
 }
