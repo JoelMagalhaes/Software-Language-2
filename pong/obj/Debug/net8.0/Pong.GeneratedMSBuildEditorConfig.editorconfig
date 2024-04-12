@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Pong
-build_property.ProjectDir = D:\School\Windesheim\SL2\a\Software-Language-2\pong\
+build_property.ProjectDir = C:\Users\ljmag\Documents\GitHub\Software-Language-2\pong\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

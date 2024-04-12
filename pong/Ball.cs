@@ -7,10 +7,12 @@ namespace Pong
         private int velocityX;
         private int velocityY;
 
-        public Ball(int x, int y, int velocityX, int velocityY)
+        public Ball(int velocityX, int velocityY)
         {
-            this.X = x;
-            this.Y = y;
+            // Sets the balls start location
+            this.X = Console.WindowWidth / 2;
+            this.Y = Console.WindowHeight / 2;
+
             this.velocityX = velocityX;
             this.velocityY = velocityY;
 
@@ -19,43 +21,41 @@ namespace Pong
 
         public void Move()
         {
-            // Remove the ball
-            Remove();
+            Remove(); // Remove the ball on the old location
 
             // Set the new coordinates based on the velocity of the ball
             X += velocityX;
             Y += velocityY;
 
-            // Draw the ball on the new position
-            Draw(X, Y);
+            Draw(); // Draw the ball on the new position
         }
 
         public void Reset()
         {
-            // Remove the ball
-            Remove();
+            Remove(); // Remove the ball on the old location
 
             // Change the ball coordinates to default
             // Default is the middle of the screen
             X = Console.WindowWidth / 2;
             Y = Console.WindowHeight / 2;
 
-            // Draw the ball on the default position
-            Draw();
+            Draw(); // Draw the ball on the default position
         }
+
         public void CheckBorderCollision(int maxWidth, int maxHeight, Scoreboard scoreboard)
         {
             // Check collision with left and right borders
             if (X <= 0)
             {
-                velocityX = -velocityX; // Reverse the horizontal velocity
+                velocityX = -2; // Reverse the horizontal velocity
                 Reset();
-                scoreboard.IncrementPlayer2Score();
-            } else if (X >= maxWidth - 1)
+                scoreboard.IncrementPlayerScore(2); // Increments the score of player 2
+            } 
+            else if (X >= maxWidth - 1)
             {
-                velocityX = -velocityX;
+                velocityX = +2; // Reverse the horizontal velocity
                 Reset();
-                scoreboard.IncrementPlayer1Score();
+                scoreboard.IncrementPlayerScore(1); // Increments the score of player 1
             }
 
             // Check collision with top border
@@ -70,8 +70,8 @@ namespace Pong
                 velocityY = -Math.Abs(velocityY); // Ensure the vertical velocity is negative
             }
         }
-
-        public void CheckPaddleCollision(Paddle paddle)
+        
+        public void CheckPaddleCollision(Paddle paddle) // If the ball collides with a paddle, reverse the direction of the paddle
         {
             if (X == paddle.X && Y >= paddle.Y && Y <= paddle.Y + paddle.Length)
             {

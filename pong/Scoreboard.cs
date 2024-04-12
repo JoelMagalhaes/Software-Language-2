@@ -4,47 +4,66 @@ namespace Pong
 {
     public class Scoreboard : Asset
     {
-        private int player1Score;
-        private int player2Score;
+        private int p1; // Score of player 1
+        private int p2; // Score of player 2
         private readonly int pointsToWin;
 
         public Scoreboard(int pointsToWin)
         {
-            player1Score = 0;
-            player2Score = 0;
-            this.pointsToWin = pointsToWin;
+            p1 = 0;
+            p2 = 0;
+            this.pointsToWin = pointsToWin; // A player has to get this many points to win the game
 
             this.X = Console.WindowWidth / 2 - 12;
             this.Y = 0;
-            this.assetImage = new String[] { $"Player 1: {player1Score}  Player 2: {player2Score}" };
+
+            UpdateScoreboard();
         }
 
-        public void IncrementPlayer1Score()
+        public void IncrementPlayerScore(int player) // Increments the score of the given player
         {
-            player1Score++;
-            this.assetImage = new string[] { $"Player 1: {player1Score}  Player 2: {player2Score}" }; // Sets the assetImage again to update the score
+            switch (player)
+            {
+                case 1:
+                    this.p1++;
+                    break;
+                case 2:
+                    this.p2++;
+                    break;
+                default:
+                    break;
+            }
+
+            UpdateScoreboard();
         }
 
-        public void IncrementPlayer2Score()
+        private void UpdateScoreboard()
         {
-            player2Score++;
-            this.assetImage = new string[] { $"Player 1: {player1Score}  Player 2: {player2Score}" }; // Sets the assetImage again to update the score
+            this.assetImage = new string[] { $"Player 1: {p1}  Player 2: {p2}" }; // Set the scoreboard with the new scores
         }
 
-        public bool Player1Wins()
+        public bool CheckForWinner() // Checks if there is a winner and returns true
         {
-            return player1Score >= pointsToWin; // returns true if the player has the points to win the game
+            if (p1 >= pointsToWin) // You win if your score is equal to the points to win
+            {
+                Win(1);
+                return true;
+            }
+            else if (p2 >= pointsToWin) // You win if your score is equal to the points to win
+            {
+                Win(2);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public bool Player2Wins()
+        public void Win(int player) // Displays the win message
         {
-            return player2Score >= pointsToWin; // returns true if the player has the points to win the game
-        }
-
-        public void Win(int player)
-        {
-            this.assetImage = new string[] { $"Player {player} wins the game!" };
-            Draw(Console.WindowWidth / 2 - 11, Console.WindowHeight / 2);
+            this.messages = new string[] { $"Player {player} wins the game!" }; // Sets the message
+            Message(Console.WindowWidth / 2 - 11, Console.WindowHeight / 2); // Writes the message
         }
     }
 }

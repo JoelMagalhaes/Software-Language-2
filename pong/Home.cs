@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace Pong
 {
-    public class Home
+    public class Home : Asset
     {
         private static Border border = new Border();
         
@@ -16,56 +16,51 @@ namespace Pong
         {
         }
         
-        public static void Show()
+        public void Show()
         {
-            border.Draw(border.X, border.Y); // Draw the border
-            Console.SetCursorPosition((Console.WindowWidth / 2) - 14, Console.WindowHeight / 2 -1); // Set the cursor so the next line is written in the middle of the screen
-            Console.WriteLine("Press enter to start the game");
-            Console.SetCursorPosition((Console.WindowWidth / 2) - 8, Console.WindowHeight / 2); // Set the cursor so the next line is written in the middle of the screen
-            Console.WriteLine("For help: pres H");
+            Console.Clear(); // Clear everything from the screen
+            border.Draw(); // Draw the border
+
+            this.messages = new string[] { "Press enter to start the game", "For help: press H" }; // Sets the messages that are going to be dispayed
+            Message();
+
             ReadOption();
         }
 
         // Shows the game key info
-        public static void ShowInfo()
+        public void ShowInfo()
         {
-            Console.Clear();
-            border.Draw(border.X, border.Y);
+            Console.Clear(); // Clear everything from the screen
+            border.Draw(); // Draw the border
 
-            Console.SetCursorPosition((Console.WindowWidth / 2) - 12, Console.WindowHeight / 2 - 1);
-            Console.WriteLine("Keys to move the paddles:");
+            this.messages = new string[] { "Keys to move the paddles:", "Player1 = W & S", "Player2 = I & K", "To play press enter" }; // Array with all the lines of the info screen
 
-            Console.SetCursorPosition((Console.WindowWidth / 2) - 7, Console.WindowHeight / 2);
-            Console.WriteLine("Player1 = W & S");
+            Message(); // Displays the messages
 
-            Console.SetCursorPosition((Console.WindowWidth / 2) - 7, Console.WindowHeight / 2 + 1);
-            Console.WriteLine("Player2 = I & K");
-
-            Console.SetCursorPosition((Console.WindowWidth / 2) - 9, Console.WindowHeight / 2 + 3);
-            Console.WriteLine("To play press enter");
             ReadOption();
         }
 
-        public static async void ReadOption()
+        public static void ReadOption() // Reads the pressed key and does something
         {
+            Home home = new Home();
             ConsoleKey key = Console.ReadKey(true).Key;
             if (key == ConsoleKey.H)
             {
-                ShowInfo();
+                home.ShowInfo(); // Show the info page
             } 
             else if (key == ConsoleKey.Escape)
             {
-                Show();
+                home.Show(); // Go back to the start page
             }
             else if (key == ConsoleKey.Enter)
             {
-                return;
+                return; // Exit the home views
             }
             else
             {
                 ReadOption();
             }
-            await Task.Delay(1);
+            //await Task.Delay(1);
         }
     }
 }

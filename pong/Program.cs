@@ -10,19 +10,18 @@ namespace Pong
         // Main method to start the game
         public static void Main()
         {
-            Console.SetWindowSize(120, 30);
-            // Sets the cursor to invisible
-            Console.CursorVisible = false;
+            Console.SetWindowSize(120, 30); // Sets the size of the screen
+            Console.CursorVisible = false; // Sets the cursor to invisible
 
             // Start the home page
             Home home = new Home();
-            Home.Show();
+            home.Show(); // Shows the opening screen of the game
 
             // Starts the game
             Game game = new Game();
-            Task.WaitAny(game.Start(), game.Ball());
+            Task.WaitAny(game.Start(), game.Ball()); // Start the tasks to play the game, and stops after one is completed
 
-            game.AskAgain();
+            game.AskAgain(); // Displays the message to play again
         }
     }
 }
