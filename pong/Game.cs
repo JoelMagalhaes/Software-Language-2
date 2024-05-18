@@ -41,11 +41,11 @@ namespace Pong
                     {
                         if (key == paddle.upKey && paddle.Y > paddle.TopBoundary) // Checks if it is the paddle upKey and if paddle is not on the top of the screen
                         {
-                            paddle.Move("up"); // Move paddle up
+                            paddle.Move(Paddle.DirectionType.up); // Move paddle up
                         }
                         if (key == paddle.downKey && paddle.Y + paddle.Length < paddle.BottomBoundary) // Checks if it is the paddle downKey and if paddle is not on the bottom of the screen
                         {
-                            paddle.Move("down"); // Move paddle down
+                            paddle.Move(Paddle.DirectionType.down); // Move paddle down
                         }
                     }
                 }

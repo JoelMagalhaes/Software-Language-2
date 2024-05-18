@@ -5,6 +5,11 @@ namespace Pong
 {
     public class Paddle : Asset
     {
+        public enum DirectionType
+        {
+            up,
+            down
+        };
         // Define properties for the paddle
         public int Length { get; private set; }
         public int TopBoundary { get; private set; }
@@ -31,19 +36,19 @@ namespace Pong
             for (int i = 0; i < Length; i++) { this.assetImage[i] = "|"; } // Makes the array with the paddle character the length of the paddle
         }
 
-        public void Move(string way)
+        public void Move(DirectionType direction)
         {
             this.Remove(); // Removes the paddle
-            switch (way)
+            switch (direction)
             {
-                case "up":
+                case DirectionType.up:
                     if (Y > TopBoundary) { Y--; } // Moves the paddle up if it is lower than the top
                     break;
-                case "down":
+                case DirectionType.down:
                     if (Y + Length /* Y coordinate + the length of the paddle */ < BottomBoundary) { Y++; } // Moves the paddle down if it is higher than the bottom of the screen
                     break;
                 default:
-                    throw new ArgumentException("Invalid direction. Expected 'up' or 'down'.", nameof(way));
+                    throw new ArgumentException("Invalid direction. Expected 'up' or 'down'.", nameof(direction));
             }
             
             this.Draw(); // Draws the paddle in the new location
