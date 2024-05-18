@@ -42,7 +42,7 @@ namespace Pong
             Draw(); // Draw the ball on the default position
         }
 
-        public void CheckCollision(Scoreboard scoreboard, List<Paddle> paddles)
+        public void CheckCollision(List<Player> players, List<Paddle> paddles)
         {
             bool isPaddleCollision = false; // Boolean for paddle collisions
             foreach (Paddle paddle in paddles) // Checks if the ball collides with a paddle and if so sets the isPaddleCollision to true
@@ -60,13 +60,13 @@ namespace Pong
                 {
                     velocityX = -velocityX; // Reverse the horizontal velocity
                     Reset();
-                    scoreboard.IncrementPlayerScore(2); // Increments the score of player 2
+                    players[1].IncrementScore(); // Increments the score of player 2
                 } 
                 else if (X >= Console.WindowWidth - 2) // Check collision with right border
                 {
                     velocityX = -velocityX; // Reverse the horizontal velocity
                     Reset();
-                    scoreboard.IncrementPlayerScore(1); // Increments the score of player 1
+                    players[0].IncrementScore(); // Increments the score of player 1
                 }
             }
 

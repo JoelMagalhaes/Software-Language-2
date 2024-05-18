@@ -12,7 +12,12 @@ namespace Pong
             new Paddle( ConsoleKey.W, ConsoleKey.S, 1 ),
             new Paddle(ConsoleKey.I, ConsoleKey.K, Console.WindowWidth - 2)
         };
-        private Scoreboard scoreboard = new Scoreboard(5); // Best of 5 game
+        private List<Player> players = new List<Player>()
+        {
+            new Player(1),
+            new Player(2),
+        };
+        private Scoreboard scoreboard = new Scoreboard();
         private Ball ball = new Ball(1, 1); // Initial position and velocity of the ball
         private bool gameRunning;
 
@@ -51,10 +56,11 @@ namespace Pong
                 }
 
                 // Draw the scoreboard above the game area and centered
+                scoreboard.Update(players);
                 scoreboard.Draw();
 
                 // Check for game end conditions
-                if (scoreboard.CheckForWinner()) { gameRunning = false; } // If someone won, stop the games
+                if (scoreboard.CheckForWinner(players)) { gameRunning = false; } // If someone won, stop the games
 
                 await Task.Delay(2); // Task delay to control the speed
             }
@@ -64,7 +70,7 @@ namespace Pong
             while (gameRunning)
             {
                 ball.Move(); // Update and draw the 
-                ball.CheckCollision(scoreboard, paddles); // Check for collisions between the ball and the border or paddles
+                ball.CheckCollision(players, paddles); // Check for collisions between the ball and the border or paddles
                 await Task.Delay(100); // Task delay to control the speed
             }
         }

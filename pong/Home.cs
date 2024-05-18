@@ -59,7 +59,6 @@ namespace Pong
             {
                 ReadOption();
             }
-            //await Task.Delay(1);
         }
     }
 }
