@@ -7,8 +7,11 @@ namespace Pong
     {
         // Sets all the game assets into variables
         private Border border = new Border();
-        private Paddle paddle1 = new Paddle(ConsoleKey.W, ConsoleKey.S, 1); // Assign keys for player 1
-        private Paddle paddle2 = new Paddle(ConsoleKey.I, ConsoleKey.K, Console.WindowWidth - 2); // Assign keys for player 2
+        private List<Paddle> paddles = new List<Paddle>() // List with the 2 paddles
+        {
+            new Paddle( ConsoleKey.W, ConsoleKey.S, 1 ),
+            new Paddle(ConsoleKey.I, ConsoleKey.K, Console.WindowWidth - 2)
+        };
         private Scoreboard scoreboard = new Scoreboard(5); // Best of 5 game
         private Ball ball = new Ball(1, 1); // Initial position and velocity of the ball
         private bool gameRunning;
@@ -25,8 +28,7 @@ namespace Pong
             // Draws the assets onto the screen
             border.Draw(); // Draw the border
             ball.Draw();
-            paddle1.Draw();
-            paddle2.Draw();
+            foreach (Paddle paddle in paddles) { paddle.Draw(); }
 
             // Start the game loop
             while (gameRunning)
@@ -35,23 +37,16 @@ namespace Pong
                 {
                     ConsoleKey key = Console.ReadKey(true).Key; // Puts the pressed key into the variable key
 
-                    if (key == paddle1.upKey && paddle1.Y > paddle1.TopBoundary) // Checks if it is the paddle1 upKey and if paddle1 is not on the top of the screen
+                    foreach (Paddle paddle in paddles)
                     {
-                        paddle1.Move("up"); // Move paddle1 up
-                    }
-                    if (key == paddle1.downKey && paddle1.Y + paddle1.Length < paddle1.BottomBoundary) // Checks if it is the paddle1 downKey and if paddle1 is not on the bottom of the screen
-                    {
-                        paddle1.Move("down"); // Move paddle1 down
-                    }
-
-                    // Handle input for paddle 2
-                    if (key == paddle2.upKey && paddle2.Y > paddle2.TopBoundary) // Checks if it is the paddle2 upKey and if paddle2 is not on the top of the screen
-                    {
-                        paddle2.Move("up"); // Move paddle2 up
-                    }
-                    if (key == paddle2.downKey && paddle2.Y + paddle2.Length < paddle2.BottomBoundary) // Checks if it is the paddle2 downKey and if paddle2 is not on the bottom of the screen
-                    {
-                        paddle2.Move("down"); // Move paddle2 down
+                        if (key == paddle.upKey && paddle.Y > paddle.TopBoundary) // Checks if it is the paddle upKey and if paddle is not on the top of the screen
+                        {
+                            paddle.Move("up"); // Move paddle up
+                        }
+                        if (key == paddle.downKey && paddle.Y + paddle.Length < paddle.BottomBoundary) // Checks if it is the paddle downKey and if paddle is not on the bottom of the screen
+                        {
+                            paddle.Move("down"); // Move paddle down
+                        }
                     }
                 }
 
@@ -64,17 +59,12 @@ namespace Pong
                 await Task.Delay(2); // Task delay to control the speed
             }
         }
-        public async Task Ball()
+        public async Task Ball() // This task makes the ball run seperate from the rest of the game so it wont interupt the moving of the paddles
         {
             while (gameRunning)
             {
-                ball.Move(); // Update and draw the ball
-
-                // Check for collisions between the ball and the border or paddles
-                ball.CheckPaddleCollision(paddle1);
-                ball.CheckPaddleCollision(paddle2);
-                ball.CheckBorderCollision(scoreboard);
-
+                ball.Move(); // Update and draw the 
+                ball.CheckCollision(scoreboard, paddles); // Check for collisions between the ball and the border or paddles
                 await Task.Delay(100); // Task delay to control the speed
             }
         }

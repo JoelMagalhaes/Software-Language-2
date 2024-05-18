@@ -42,19 +42,32 @@ namespace Pong
             Draw(); // Draw the ball on the default position
         }
 
-        public void CheckBorderCollision(Scoreboard scoreboard)
+        public void CheckCollision(Scoreboard scoreboard, List<Paddle> paddles)
         {
-            if (X <= 0) // Check collision with left border
+            bool isPaddleCollision = false; // Boolean for paddle collisions
+            foreach (Paddle paddle in paddles) // Checks if the ball collides with a paddle and if so sets the isPaddleCollision to true
             {
-                velocityX = -velocityX; // Reverse the horizontal velocity
-                Reset();
-                scoreboard.IncrementPlayerScore(2); // Increments the score of player 2
-            } 
-            else if (X >= Console.WindowWidth - 2) // Check collision with right border
+                if (X == paddle.X && Y >= paddle.Y && Y <= paddle.Y + paddle.Length) { isPaddleCollision = true; break; }
+            }
+
+            if (isPaddleCollision) // If there is a paddle collision change the way the ball is going
             {
-                velocityX = -velocityX; // Reverse the horizontal velocity
-                Reset();
-                scoreboard.IncrementPlayerScore(1); // Increments the score of player 1
+                velocityX = -velocityX;
+            }
+            else // If there is no padlle collision check for border x collisions
+            {
+                if (X <= 1) // Check collision with left border
+                {
+                    velocityX = -velocityX; // Reverse the horizontal velocity
+                    Reset();
+                    scoreboard.IncrementPlayerScore(2); // Increments the score of player 2
+                } 
+                else if (X >= Console.WindowWidth - 2) // Check collision with right border
+                {
+                    velocityX = -velocityX; // Reverse the horizontal velocity
+                    Reset();
+                    scoreboard.IncrementPlayerScore(1); // Increments the score of player 1
+                }
             }
 
             if (Y <= 2) // Check collision with top border
@@ -64,14 +77,6 @@ namespace Pong
             else if (Y >= Console.WindowHeight - 2) // Check collision with bottom border
             {
                 velocityY = -velocityY; // Ensure the vertical velocity is negative
-            }
-        }
-        
-        public void CheckPaddleCollision(Paddle paddle) // If the ball collides with a paddle, reverse the direction of the paddle
-        {
-            if (X == paddle.X && Y >= paddle.Y && Y <= paddle.Y + paddle.Length)
-            {
-                velocityX = -velocityX;
             }
         }
     }
