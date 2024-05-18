@@ -61,7 +61,7 @@ namespace Pong
             {
                 velocityY = -velocityY; // Ensure the vertical velocity is positive
             }          
-            else if (Y >= Console.WindowHeight - 3) // Check collision with bottom border
+            else if (Y >= Console.WindowHeight - 2) // Check collision with bottom border
             {
                 velocityY = -velocityY; // Ensure the vertical velocity is negative
             }

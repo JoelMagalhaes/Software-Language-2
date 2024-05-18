@@ -55,11 +55,6 @@ namespace Pong
                     }
                 }
 
-                // Check for collisions between the ball and the border or paddles
-                ball.CheckPaddleCollision(paddle1);
-                ball.CheckPaddleCollision(paddle2);
-                ball.CheckBorderCollision(scoreboard);
-
                 // Draw the scoreboard above the game area and centered
                 scoreboard.Draw();
 
@@ -74,6 +69,12 @@ namespace Pong
             while (gameRunning)
             {
                 ball.Move(); // Update and draw the ball
+
+                // Check for collisions between the ball and the border or paddles
+                ball.CheckPaddleCollision(paddle1);
+                ball.CheckPaddleCollision(paddle2);
+                ball.CheckBorderCollision(scoreboard);
+
                 await Task.Delay(100); // Task delay to control the speed
             }
         }
