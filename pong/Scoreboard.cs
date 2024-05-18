@@ -12,25 +12,25 @@ namespace Pong
 
         public void Update(List<Player> players)
         {
-            this.assetImage = new string[] { $"Player 1: {players[0].score}  Player 2: {players[1].score}" }; // Set the scoreboard with the new scores
+            this.AssetImage = new string[] { $"Player 1: {players[0].Score}  Player 2: {players[1].Score}" }; // Set the scoreboard with the new scores
         }
 
-        public bool CheckForWinner(List<Player> players) // Checks if there is a winner and returns true
+        public bool CheckForWinner(List<Player> Players) // Checks if there is a winner and returns true
         {
-            foreach (Player player in players)
+            foreach (Player Player in Players)
             {
-                if (player.score >= player.pointsToWin)
+                if (Player.Score >= Player.PointsToWin)
                 {
-                    Win(player);
+                    Win(Player);
                     return true;
                 }
             }
             return false;
         }
 
-        public void Win(Player player) // Displays the win message
+        public void Win(Player Player) // Displays the win message
         {
-            this.messages = new string[] { $"Player {player.id} wins the game!" }; // Sets the message
+            this.Messages = new string[] { $"Player {Player.Id} wins the game!" }; // Sets the message
             Message(Console.WindowWidth / 2 - 11, Console.WindowHeight / 2); // Writes the message
         }
     }

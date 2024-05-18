@@ -10,7 +10,7 @@ namespace Pong
 {
     public class Home : Asset
     {
-        private static Border border = new Border();
+        private static Border s_border = new Border();
         
         public Home()
         {
@@ -19,9 +19,9 @@ namespace Pong
         public void Show()
         {
             Console.Clear(); // Clear everything from the screen
-            border.Draw(); // Draw the border
+            s_border.Draw(); // Draw the border
 
-            this.messages = new string[] { "Press enter to start the game", "For help: press H" }; // Sets the messages that are going to be dispayed
+            this.Messages = new string[] { "Press enter to start the game", "For help: press H" }; // Sets the messages that are going to be dispayed
             Message(); // Displays the messages from the messages array in the middle of the screen
 
             ReadOption(); // Reads the pressed key
@@ -30,9 +30,9 @@ namespace Pong
         public void ShowInfo() // Shows the game key info
         {
             Console.Clear(); // Clear everything from the screen
-            border.Draw(); // Draw the border
+            s_border.Draw(); // Draw the border
 
-            this.messages = new string[] { "Keys to move the paddles:", "Player1 = W & S", "Player2 = I & K", "To play press enter" }; // Array with all the lines of the info screen
+            this.Messages = new string[] { "Keys to move the paddles:", "Player1 = W & S", "Player2 = I & K", "To play press enter" }; // Array with all the lines of the info screen
 
             Message(); // Displays the messages
 
@@ -41,17 +41,17 @@ namespace Pong
 
         public static void ReadOption() // Reads the pressed key and does something
         {
-            Home home = new Home();
-            ConsoleKey key = Console.ReadKey(true).Key;
-            if (key == ConsoleKey.H)
+            Home Home = new Home();
+            ConsoleKey Key = Console.ReadKey(true).Key;
+            if (Key == ConsoleKey.H)
             {
-                home.ShowInfo(); // Show the info page
+                Home.ShowInfo(); // Show the info page
             } 
-            else if (key == ConsoleKey.Escape)
+            else if (Key == ConsoleKey.Escape)
             {
-                home.Show(); // Go back to the start page
+                Home.Show(); // Go back to the start page
             }
-            else if (key == ConsoleKey.Enter)
+            else if (Key == ConsoleKey.Enter)
             {
                 return; // Exit the home views
             }

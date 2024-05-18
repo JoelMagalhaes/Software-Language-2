@@ -6,24 +6,24 @@ namespace Pong
     public class Game
     {
         // Sets all the game assets into variables
-        private Border border = new Border();
-        private List<Paddle> paddles = new List<Paddle>() // List with the 2 paddles
+        private Border _border = new Border();
+        private List<Paddle> _paddles = new List<Paddle>() // List with the 2 paddles
         {
             new Paddle( ConsoleKey.W, ConsoleKey.S, 1 ),
             new Paddle(ConsoleKey.I, ConsoleKey.K, Console.WindowWidth - 2)
         };
-        private List<Player> players = new List<Player>()
+        private List<Player> _players = new List<Player>()
         {
             new Player(1),
             new Player(2),
         };
-        private Scoreboard scoreboard = new Scoreboard();
-        private Ball ball = new Ball(1, 1); // Initial position and velocity of the ball
-        private bool gameRunning;
+        private Scoreboard _scoreboard = new Scoreboard();
+        private Ball _ball = new Ball(1, 1); // Initial position and velocity of the ball
+        private bool _gameRunning;
 
         public Game()
         {
-            gameRunning = true; // Starts the game
+            _gameRunning = true; // Starts the game
         }
 
         public async Task Start()
@@ -31,46 +31,46 @@ namespace Pong
             Console.Clear(); // Clears the console
 
             // Draws the assets onto the screen
-            border.Draw(); // Draw the border
-            ball.Draw();
-            foreach (Paddle paddle in paddles) { paddle.Draw(); }
+            _border.Draw(); // Draw the border
+            _ball.Draw();
+            foreach (Paddle Paddle in _paddles) { Paddle.Draw(); }
 
             // Start the game loop
-            while (gameRunning)
+            while (_gameRunning)
             {
                 if (Console.KeyAvailable) // If there is a key pressed, check if it is to move a paddle and then move a paddle. This is being done in this function so you dont have to press the key twice
                 {
-                    ConsoleKey key = Console.ReadKey(true).Key; // Puts the pressed key into the variable key
+                    ConsoleKey Key = Console.ReadKey(true).Key; // Puts the pressed key into the variable key
 
-                    foreach (Paddle paddle in paddles)
+                    foreach (Paddle Paddle in _paddles)
                     {
-                        if (key == paddle.upKey && paddle.Y > paddle.TopBoundary) // Checks if it is the paddle upKey and if paddle is not on the top of the screen
+                        if (Key == Paddle.UpKey && Paddle.Y > Paddle.TopBoundary) // Checks if it is the paddle upKey and if paddle is not on the top of the screen
                         {
-                            paddle.Move(Paddle.DirectionType.up); // Move paddle up
+                            Paddle.Move(Paddle.DirectionType.up); // Move paddle up
                         }
-                        if (key == paddle.downKey && paddle.Y + paddle.Length < paddle.BottomBoundary) // Checks if it is the paddle downKey and if paddle is not on the bottom of the screen
+                        if (Key == Paddle.DownKey && Paddle.Y + Paddle.Length < Paddle.BottomBoundary) // Checks if it is the paddle downKey and if paddle is not on the bottom of the screen
                         {
-                            paddle.Move(Paddle.DirectionType.down); // Move paddle down
+                            Paddle.Move(Paddle.DirectionType.down); // Move paddle down
                         }
                     }
                 }
 
                 // Draw the scoreboard above the game area and centered
-                scoreboard.Update(players);
-                scoreboard.Draw();
+                _scoreboard.Update(_players);
+                _scoreboard.Draw();
 
                 // Check for game end conditions
-                if (scoreboard.CheckForWinner(players)) { gameRunning = false; } // If someone won, stop the games
+                if (_scoreboard.CheckForWinner(_players)) { _gameRunning = false; } // If someone won, stop the games
 
                 await Task.Delay(2); // Task delay to control the speed
             }
         }
         public async Task Ball() // This task makes the ball run seperate from the rest of the game so it wont interupt the moving of the paddles
         {
-            while (gameRunning)
+            while (_gameRunning)
             {
-                ball.Move(); // Update and draw the 
-                ball.CheckCollision(players, paddles); // Check for collisions between the ball and the border or paddles
+                _ball.Move(); // Update and draw the 
+                _ball.CheckCollision(_players, _paddles); // Check for collisions between the ball and the border or paddles
                 await Task.Delay(100); // Task delay to control the speed
             }
         }
@@ -82,8 +82,8 @@ namespace Pong
                 Console.SetCursorPosition(Console.WindowWidth / 2 - 18, Console.WindowHeight / 2 + 1); // Writes the message on the specified line
                 Console.Write("Do you wanna play again? Press enter"); // Sets the message
 
-                ConsoleKey key = Console.ReadKey(true).Key; // Check the pressed key
-                if (key == ConsoleKey.Enter)
+                ConsoleKey Key = Console.ReadKey(true).Key; // Check the pressed key
+                if (Key == ConsoleKey.Enter)
                 {
                     // If key = enter, start the game again
                     Game game = new Game();

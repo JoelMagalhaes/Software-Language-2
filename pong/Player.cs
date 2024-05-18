@@ -8,17 +8,17 @@ namespace Pong
 {
     public class Player
     {
-        public readonly int pointsToWin = 5;
-        public int id;
-        public int score {  get; private set; }
+        public readonly int PointsToWin = 5;
+        public int Id;
+        public int Score {  get; private set; }
 
         public Player(int id)
         {
-            this.id = id;
+            this.Id = id;
         }
         public void IncrementScore()
         {
-            score++;
+            Score++;
         }
     }
 }
