@@ -4,8 +4,8 @@ namespace Pong
 {
     public class Ball : Asset
     {
-        private int velocityX;
-        private int velocityY;
+        private int _velocityX;
+        private int _velocityY;
 
         public Ball(int velocityX, int velocityY)
         {
@@ -13,10 +13,10 @@ namespace Pong
             this.X = Console.WindowWidth / 2;
             this.Y = Console.WindowHeight / 2;
 
-            this.velocityX = velocityX;
-            this.velocityY = velocityY;
+            this._velocityX = velocityX;
+            this._velocityY = velocityY;
 
-            this.assetImage = new String[] { "O" };
+            this.AssetImage = new String[] { "O" };
         }
 
         public void Move()
@@ -24,8 +24,8 @@ namespace Pong
             Remove(); // Remove the ball on the old location
 
             // Set the new coordinates based on the velocity of the ball
-            X += velocityX;
-            Y += velocityY;
+            X += _velocityX;
+            Y += _velocityY;
 
             Draw(); // Draw the ball on the new position
         }
@@ -42,36 +42,41 @@ namespace Pong
             Draw(); // Draw the ball on the default position
         }
 
-        public void CheckBorderCollision(Scoreboard scoreboard)
+        public void CheckCollision(List<Player> Players, List<Paddle> Paddles)
         {
-            if (X <= 0) // Check collision with left border
+            bool IsPaddleCollision = false; // Boolean for paddle collisions
+            foreach (Paddle Paddle in Paddles) // Checks if the ball collides with a paddle and if so sets the isPaddleCollision to true
             {
-                velocityX = -velocityX; // Reverse the horizontal velocity
-                Reset();
-                scoreboard.IncrementPlayerScore(2); // Increments the score of player 2
-            } 
-            else if (X >= Console.WindowWidth - 2) // Check collision with right border
+                if (X == Paddle.X && Y >= Paddle.Y && Y <= Paddle.Y + Paddle.Length) { IsPaddleCollision = true; break; }
+            }
+
+            if (IsPaddleCollision) // If there is a paddle collision change the way the ball is going
             {
-                velocityX = -velocityX; // Reverse the horizontal velocity
-                Reset();
-                scoreboard.IncrementPlayerScore(1); // Increments the score of player 1
+                _velocityX = -_velocityX;
+            }
+            else // If there is no padlle collision check for border x collisions
+            {
+                if (X <= 1) // Check collision with left border
+                {
+                    _velocityX = -_velocityX; // Reverse the horizontal velocity
+                    Reset();
+                    Players[1].IncrementScore(); // Increments the score of player 2
+                } 
+                else if (X >= Console.WindowWidth - 2) // Check collision with right border
+                {
+                    _velocityX = -_velocityX; // Reverse the horizontal velocity
+                    Reset();
+                    Players[0].IncrementScore(); // Increments the score of player 1
+                }
             }
 
             if (Y <= 2) // Check collision with top border
             {
-                velocityY = -velocityY; // Ensure the vertical velocity is positive
+                _velocityY = -_velocityY; // Ensure the vertical velocity is positive
             }          
-            else if (Y >= Console.WindowHeight - 3) // Check collision with bottom border
+            else if (Y >= Console.WindowHeight - 2) // Check collision with bottom border
             {
-                velocityY = -velocityY; // Ensure the vertical velocity is negative
-            }
-        }
-        
-        public void CheckPaddleCollision(Paddle paddle) // If the ball collides with a paddle, reverse the direction of the paddle
-        {
-            if (X == paddle.X && Y >= paddle.Y && Y <= paddle.Y + paddle.Length)
-            {
-                velocityX = -velocityX;
+                _velocityY = -_velocityY; // Ensure the vertical velocity is negative
             }
         }
     }

@@ -4,8 +4,8 @@ namespace Pong
 {
     public class Border : Asset
     {
-        public string tb = ""; // String for the top and bottom of the border
-        public string lr = ""; // String for the left and right sides of the border
+        public string Tb = ""; // String for the top and bottom of the border
+        public string Lr = ""; // String for the left and right sides of the border
 
         public Border()
         {
@@ -13,18 +13,18 @@ namespace Pong
             this.X = 0;
             this.Y = 1;
 
-            for (int i = 0; i < Console.WindowWidth; i++) { tb += "+"; } // Makes a row with '+' for the entire screen width
-            for (int i = 0; i < Console.WindowWidth - 2; i++) { lr += " "; } // Makes a string that start with '+' and end with '+'. And makes it the width of the screen
-            lr = "+" + lr + "+"; // Set lr correctly
+            for (int i = 0; i < Console.WindowWidth; i++) { Tb += "+"; } // Makes a row with '+' for the entire screen width
+            for (int i = 0; i < Console.WindowWidth - 2; i++) { Lr += " "; } // Makes a string that start with '+' and end with '+'. And makes it the width of the screen
+            Lr = "+" + Lr + "+"; // Set lr correctly
 
-            this.assetImage = new String[Console.WindowHeight]; // Initialize the array with correct size
+            this.AssetImage = new String[Console.WindowHeight]; // Initialize the array with correct size
 
-            this.assetImage[0] = tb; // Assign the top border
+            this.AssetImage[0] = Tb; // Assign the top border
             for (int i = 1; i < Console.WindowHeight - 2; i++) // Runs for each row of the border after the top border
             {
-                this.assetImage[i] = lr; // Assign the side borders
+                this.AssetImage[i] = Lr; // Assign the side borders
             }
-            this.assetImage[Console.WindowHeight - 2] = tb; // Assign the bottom border
+            this.AssetImage[Console.WindowHeight - 2] = Tb; // Assign the bottom border
         }
     }
 }

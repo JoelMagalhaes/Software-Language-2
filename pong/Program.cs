@@ -17,14 +17,14 @@ namespace Pong
             Console.CursorVisible = false; // Sets the cursor to be invisible
 
             // Start the home page
-            Home home = new Home();
-            home.Show(); // Shows the opening screen of the game
+            Home Home = new Home();
+            Home.Show(); // Shows the opening screen of the game
 
             // Starts the game
-            Game game = new Game();
-            Task.WaitAny(game.Start(), game.Ball()); // Start the tasks to play the game, and stops after one is completed
+            Game Game = new Game();
+            Task.WaitAny(Game.Start(), Game.Ball()); // Start the tasks to play the game, and stops after one is completed
 
-            game.AskAgain(); // Displays the message to play again
+            Game.AskAgain(); // Displays the message to play again
         }
     }
 }
