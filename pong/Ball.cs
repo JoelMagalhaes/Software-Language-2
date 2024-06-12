@@ -7,11 +7,9 @@ namespace Pong
     {
         private double _velocityX;
         private double _velocityY;
-        private const double SpeedIncreaseStep = 0.2;
-        private int _hitCount = 0;
-        private const int HitsBeforeSpeedIncrease = 1;
         private double _positionX; 
-        private double _positionY; 
+        private double _positionY;
+        public int Speed { get; set; } = 150; // Speed of the ball
 
         // Constructor with correct parameter types
         public Ball(double velocityX, double velocityY)
@@ -38,7 +36,7 @@ namespace Pong
             X = (int)_positionX;
             Y = (int)_positionY;
 
-            Draw(); // Draw the ball in the new position
+           // Draw(); // Draw the ball in the new position
         }
 
         public void Reset()
@@ -69,33 +67,36 @@ namespace Pong
                 }
             }
 
-            if (isPaddleCollision) // If there is a paddle collision change the way the ball is going
+            if (isPaddleCollision) // If there is a paddle collision, change the way the ball is going
             {
                 _velocityX = -_velocityX;
-                _hitCount++;
-               
-                if (_hitCount >= HitsBeforeSpeedIncrease)
+                if (Speed > 50)
                 {
-                    _velocityX += Math.Sign(_velocityX) * SpeedIncreaseStep;
-                    _velocityY += Math.Sign(_velocityY) * SpeedIncreaseStep;
-                    _hitCount = 0; // Reset the hit counter
+                    Speed -= 10; // Decrease the speed by 10 if it is higher than 50
                 }
             }
             else // If there is no paddle collision, check for border x collisions
             {
-                if (X <= 1) // Check collision with left border
+                bool isLeftBorderCollision = (X <= 1); // Check collision with left border
+                bool isRightBorderCollision = (X >= Console.WindowWidth - 2); // Check collision with right border
+
+                if (isLeftBorderCollision || isRightBorderCollision)
                 {
+                    Speed = 150; // Reset the speed
                     _velocityX = -_velocityX; // Reverse the horizontal velocity
                     Reset();
-                    players[1].IncrementScore(); // Increments the score of player 2
-                }
-                else if (X >= Console.WindowWidth - 2) // Check collision with right border
-                {
-                    _velocityX = -_velocityX; // Reverse the horizontal velocity
-                    Reset();
-                    players[0].IncrementScore(); // Increments the score of player 1
+
+                    if (isLeftBorderCollision)
+                    {
+                        players[1].IncrementScore(); // Increment the score of player 2
+                    }
+                    else if (isRightBorderCollision)
+                    {
+                        players[0].IncrementScore(); // Increment the score of player 1
+                    }
                 }
             }
+
 
             if (Y <= 2) // Check collision with top border
             {
