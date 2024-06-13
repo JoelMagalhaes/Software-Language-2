@@ -21,8 +21,12 @@ namespace Pong
             Console.Clear(); // Clear everything from the screen
             s_border.Draw(); // Draw the border
 
-            this.Messages = new string[] { "Press enter to start the game", "For help: press H" }; // Sets the messages that are going to be dispayed
-            Message(); // Displays the messages from the messages array in the middle of the screen
+            string message = "Press enter to start the game";
+            Console.SetCursorPosition((Console.WindowWidth / 2) - (message.Length / 2), Console.WindowHeight / 2); // Sets the cursor at the middle of the screen
+            Console.Write(message);
+            message = "For help: press H";
+            Console.SetCursorPosition((Console.WindowWidth / 2) - (message.Length / 2), (Console.WindowHeight / 2) + 1); // Move the cursor one line down
+            Console.Write(message);
 
             ReadOption(); // Reads the pressed key
         }
@@ -32,11 +36,20 @@ namespace Pong
             Console.Clear(); // Clear everything from the screen
             s_border.Draw(); // Draw the border
 
-            this.Messages = new string[] { "Keys to move the paddles:", "Player1 = W & S", "Player2 = I & K", "To play press enter" }; // Array with all the lines of the info screen
+            string message = "Keys to move the paddles:";
+            Console.SetCursorPosition((Console.WindowWidth / 2) - (message.Length / 2), (Console.WindowHeight / 2)); // Sets the cursor at the middle of the screen
+            Console.Write(message);
+            message = "Player1 = W & S";
+            Console.SetCursorPosition((Console.WindowWidth / 2) - (message.Length / 2), (Console.WindowHeight / 2) + 1); // Move the cursor one line down
+            Console.Write(message);
+            message = "Player2 = I & K";
+            Console.SetCursorPosition((Console.WindowWidth / 2) - (message.Length / 2), (Console.WindowHeight / 2) + 2); // Move the cursor one line down
+            Console.Write(message);
+            message = "To play press enter";
+            Console.SetCursorPosition((Console.WindowWidth / 2) - (message.Length / 2), (Console.WindowHeight / 2) + 3); // Move the cursor one line down
+            Console.Write(message);
 
-            Message(); // Displays the messages
-
-            ReadOption();
+            ReadOption(); // Reads the pressed key
         }
 
         public static void ReadOption() // Reads the pressed key and does something

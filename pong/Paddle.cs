@@ -24,7 +24,7 @@ namespace Pong
             this.X = x; // The x position the paddle will be in
             this.Y = 12; // Set the initial Y position
 
-            Length = 5; // Length of the paddle
+            Length = 7; // Length of the paddle
             TopBoundary = 2; // Top boundary
             BottomBoundary = Console.WindowHeight - 1; // Default bottom boundary
 

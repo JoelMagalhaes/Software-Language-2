@@ -71,30 +71,5 @@ namespace Pong
                 }
             }
         }   
-
-        public void Message() // Puts the message on the middle of the screen
-        {
-            // These are the coordinates of the middle of the screen
-            int WindowWidthHalf = Console.WindowWidth / 2;
-            int WindowHeightHalf = Console.WindowHeight / 2;
-
-            int Offset = - (Messages.Length / 2); // This is the offset from the middle on the y axis
-
-            foreach (string s in Messages)
-            {
-                Console.SetCursorPosition(WindowWidthHalf - (s.Length / 2) /* Takes half the length of s from the x half so the message is in the middle of the screen  */ ,
-                                            WindowHeightHalf + Offset++ /* The offset is used so the lines will be roughly in the middle of the screen */); // Set the cursor position for the line
-                Console.WriteLine(s);
-            }
-        }
-
-        public void Message(int X, int Y) // Puts the first message on the specified line and the lines underneath
-        {
-            foreach (string S in Messages)
-            {
-                Console.SetCursorPosition(X, Y++); // Sets the cursor on the specified place
-                Console.WriteLine(S); // Writes the message
-            }
-        }
     }
 }

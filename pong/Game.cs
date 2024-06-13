@@ -71,7 +71,8 @@ namespace Pong
             {
                 _ball.Move(); // Update and draw the 
                 _ball.CheckCollision(_players, _paddles); // Check for collisions between the ball and the border or paddles
-                await Task.Delay(100); // Task delay to control the speed
+                _ball.Draw(); // Draw the ball in the new position
+                await Task.Delay(_ball.Speed); // Task delay to control the speed
             }
         }
 
