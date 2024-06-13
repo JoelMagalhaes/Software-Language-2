@@ -30,8 +30,10 @@ namespace Pong
 
         public void Win(Player Player) // Displays the win message
         {
-            this.Messages = new string[] { $"Player {Player.Id} wins the game!" }; // Sets the message
-            Message(Console.WindowWidth / 2 - 11, Console.WindowHeight / 2); // Writes the message
+            string message = $"Player {Player.Id} wins the game!";
+            Console.SetCursorPosition((Console.WindowWidth / 2) - (message.Length / 2), Console.WindowHeight / 2); // Sets the cursor at the middle of the screen with a offset so the message will be in the middle
+
+            Console.Write(message);
         }
     }
 }
