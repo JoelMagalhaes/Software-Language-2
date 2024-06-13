@@ -21,10 +21,12 @@ namespace Pong
             Console.Clear(); // Clear everything from the screen
             s_border.Draw(); // Draw the border
 
-            Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2); // Sets the cursor at the middle of the screen
-            Console.Write("Press enter to start the game");
-            Console.SetCursorPosition((Console.WindowWidth / 2), (Console.WindowHeight / 2) + 1); // Move the cursor one line down
-            Console.Write("For help: press H");
+            string message = "Press enter to start the game";
+            Console.SetCursorPosition((Console.WindowWidth / 2) - (message.Length / 2), Console.WindowHeight / 2); // Sets the cursor at the middle of the screen
+            Console.Write(message);
+            message = "For help: press H";
+            Console.SetCursorPosition((Console.WindowWidth / 2) - (message.Length / 2), (Console.WindowHeight / 2) + 1); // Move the cursor one line down
+            Console.Write(message);
 
             ReadOption(); // Reads the pressed key
         }
